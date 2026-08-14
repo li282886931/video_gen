@@ -1,4 +1,0 @@
-file 'D:/code/video_gen/output/demo_batch/story_0002_一个山间小屋里晨光破晓的治愈故事/scene_01.mp4'
-file 'D:/code/video_gen/output/demo_batch/story_0002_一个山间小屋里晨光破晓的治愈故事/scene_02.mp4'
-file 'D:/code/video_gen/output/demo_batch/story_0002_一个山间小屋里晨光破晓的治愈故事/scene_03.mp4'
-file 'D:/code/video_gen/output/demo_batch/story_0002_一个山间小屋里晨光破晓的治愈故事/scene_04.mp4'
