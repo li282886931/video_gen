@@ -1,0 +1,4 @@
+file 'D:/code/video_gen/output/demo_batch_concurrent/story_0001_城市夜景中的新品发布会/scene_01.mp4'
+file 'D:/code/video_gen/output/demo_batch_concurrent/story_0001_城市夜景中的新品发布会/scene_02.mp4'
+file 'D:/code/video_gen/output/demo_batch_concurrent/story_0001_城市夜景中的新品发布会/scene_03.mp4'
+file 'D:/code/video_gen/output/demo_batch_concurrent/story_0001_城市夜景中的新品发布会/scene_04.mp4'

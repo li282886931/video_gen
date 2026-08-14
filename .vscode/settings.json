@@ -1,0 +1,12 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^cmd /c \"set VIDEO_OUTPUT_DIR=d:\\\\code\\\\video_gen\\\\output && e:\\\\BAIDUYUNPAN\\\\PYENV-WIN-MASTER\\\\PYENV-WIN\\\\versions\\\\3\\.9\\.13\\\\python\\.exe d:\\\\code\\\\video_gen\\\\run_pipeline\\.py --story \"\"一名创业者在夜晚高楼间发布新产品，镜头展示城市灯光、人物情绪和产品细节\"\" --shots 3 --provider mock\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cmd /c \"set VIDEO_OUTPUT_DIR=d:\\\\code\\\\video_gen\\\\output && e:\\\\BAIDUYUNPAN\\\\PYENV-WIN-MASTER\\\\PYENV-WIN\\\\versions\\\\3\\.9\\.13\\\\python\\.exe -m compileall d:\\\\code\\\\video_gen\\\\app && e:\\\\BAIDUYUNPAN\\\\PYENV-WIN-MASTER\\\\PYENV-WIN\\\\versions\\\\3\\.9\\.13\\\\python\\.exe d:\\\\code\\\\video_gen\\\\run_pipeline\\.py --stories-file d:\\\\code\\\\video_gen\\\\examples\\\\stories\\.txt --batch-name demo_batch --provider mock --batch-limit 2\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
