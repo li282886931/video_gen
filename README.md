@@ -44,6 +44,8 @@
 
 ## 3. 项目目录
 
+前端演示（可选）已添加在 frontend/，包含 Vite + React 示例项目。
+
 ```text
 video_gen/
 ├── app/
@@ -184,6 +186,48 @@ output/
 ```
 
 ## 7. 批量故事文件格式
+
+## 8. 新增：FastAPI 后端与 React 聊天 UI（演示）
+
+项目已新增一个轻量后端 API（FastAPI）和一个本地示例聊天 UI，用于与 LLM 交互。主要文件：
+
+- [app/api.py](D:/code/video_gen/app/api.py) — FastAPI 服务，包含 /api/chat, /api/plan, /api/health 及一个简单的 UI 路由。
+- [app/harness.py](D:/code/video_gen/app/harness.py) — 一个轻量 harness，封装 OpenAI 聊天调用并提供 plan_shots() 功能。
+- [app/chat_ui.html](D:/code/video_gen/app/chat_ui.html) — 使用 React（CDN）实现的简易聊天页面，默认请求 /api/chat。
+
+快速运行（示例）：
+
+1. 安装依赖：
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+2. 在 `.env` 或系统环境中设置 OpenAI Key：
+
+```bash
+set OPENAI_API_KEY=your_key_here
+# 或者使用仓库已有的 LLM_API_TOKEN / LLM_MODEL_NAME 配置
+```
+
+3. 启动服务：
+
+```bash
+python -m uvicorn app.api:app --reload --port 8000
+```
+
+4. 在浏览器打开 http://localhost:8000/ 使用聊天 UI，或用 curl / Postman 访问 /api/chat 和 /api/plan。
+
+说明：当前 UI 使用 CDN 上的 React，因此无需安装 node 即可本地快速预览（适合开发/演示）。如果需要完整的 React/Vite 前端工程，可后续添加。 
+
+## 9. 变更依赖
+
+在 requirements.txt 中新增：
+
+- fastapi
+- uvicorn
+- openai
+
 
 ### 文本文件
 

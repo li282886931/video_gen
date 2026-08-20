@@ -1,2 +1,5 @@
+fastapi>=0.95.0
+uvicorn[standard]>=0.22.0
+deepagent>=0.1.0
 requests>=2.31.0
 python-dotenv>=1.0.1
