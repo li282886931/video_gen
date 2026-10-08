@@ -1,4 +1,5 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional
 
 
 @dataclass
@@ -29,3 +30,34 @@ class SceneSpec:
     duration_seconds: int
     camera: str = "cinematic camera move"
     image_path: str = ""
+
+
+@dataclass
+class Asset:
+    id: str
+    name: str
+    type: str
+    source: str = "local"
+    path: str = ""
+    duration_seconds: Optional[float] = None
+    resolution: Optional[str] = None
+    created_at: str = ""
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
+class WorkbenchTask:
+    id: str
+    title: str
+    module: str
+    status: str = "pending"
+    story_prompt: str = ""
+    asset_ids: List[str] = field(default_factory=list)
+    edit_profile: Dict[str, Any] = field(default_factory=dict)
+    subtitle_cues: List[Dict[str, Any]] = field(default_factory=list)
+    voiceover: Dict[str, Any] = field(default_factory=dict)
+    progress: int = 0
+    outputs: Dict[str, Any] = field(default_factory=dict)
+    error: str = ""
+    created_at: str = ""
+    updated_at: str = ""

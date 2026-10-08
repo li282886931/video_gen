@@ -44,7 +44,7 @@
 
 ## 3. 项目目录
 
-前端演示（可选）已添加在 frontend/，包含 Vite + React 示例项目。
+前端工作台已添加在 frontend/，包含 Vite + React 项目。
 
 ```text
 video_gen/
@@ -118,6 +118,12 @@ IMAGE_PROVIDER=mock
 IMAGE_API_BASE_URL=https://api.example.com/v1
 IMAGE_API_TOKEN=your_image_token
 IMAGE_MODEL_NAME=flux-dev
+
+MYSQL_HOST=127.0.0.1
+MYSQL_PORT=3306
+MYSQL_USER=root
+MYSQL_PASSWORD=your_mysql_password
+MYSQL_DATABASE=video_gen_workbench
 ```
 
 说明：
@@ -126,6 +132,49 @@ IMAGE_MODEL_NAME=flux-dev
 - `LLM_*`：脚本生成 / 分镜 reasoning 接口
 - `IMAGE_*`：参考图生成接口
 - `VIDEO_*`：视频生成配置
+- `MYSQL_*`：Docker MySQL 连接配置，默认数据库名为 `video_gen_workbench`
+
+数据库连通性检查：
+
+```bash
+curl http://127.0.0.1:8000/api/db/health
+```
+
+业务数据表会在后端启动时自动创建，默认使用 Docker MySQL 中的 `video_gen_workbench` 数据库：
+
+- `users`
+- `memberships`
+- `assets`
+- `tasks`
+- `orders`
+- `provider_configs`
+- `accounts`
+- `sessions`
+- `wallets`
+- `wallet_transactions`
+
+默认本地账号：
+
+```text
+账号：local-user
+密码：local-password
+```
+
+登录、鉴权与余额接口：
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"local-user","password":"local-password"}'
+
+curl http://127.0.0.1:8000/api/workbench/state \
+  -H "Authorization: Bearer <token>"
+
+curl -X POST http://127.0.0.1:8000/api/wallet/recharge \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <token>" \
+  -d '{"amount":100,"note":"充值"}'
+```
 
 ## 6. 快速开始
 
@@ -187,15 +236,18 @@ output/
 
 ## 7. 批量故事文件格式
 
-## 8. 新增：FastAPI 后端与 React 聊天 UI（演示）
+## 8. 新增：FastAPI 后端与 React 工作台
 
-项目已新增一个轻量后端 API（FastAPI）和一个本地示例聊天 UI，用于与 LLM 交互。主要文件：
+项目已新增一个轻量后端 API（FastAPI）和本地 React 工作台，用于视频创作、任务管理、字幕、配音、会员、订单与供应商配置。主要文件：
 
-- [app/api.py](D:/code/video_gen/app/api.py) — FastAPI 服务，包含 /api/chat, /api/plan, /api/health 及一个简单的 UI 路由。
+- [app/api.py](D:/code/video_gen/app/api.py) — FastAPI 服务，包含 /api/chat, /api/plan, /api/health 及工作台 API。
 - [app/harness.py](D:/code/video_gen/app/harness.py) — 一个轻量 harness，封装 OpenAI 聊天调用并提供 plan_shots() 功能。
-- [app/chat_ui.html](D:/code/video_gen/app/chat_ui.html) — 使用 React（CDN）实现的简易聊天页面，默认请求 /api/chat。
+- [frontend/src/App.jsx](D:/code/video_gen/frontend/src/App.jsx) — React 工作台主界面。
+- [app/mysql_store.py](D:/code/video_gen/app/mysql_store.py) — MySQL 表持久化素材、任务、订单、会员与供应商配置。
+- [app/task_store.py](D:/code/video_gen/app/task_store.py) — 本地 JSON 降级存储，用于数据库不可用时保持基础可用。
+- [app/video_ops.py](D:/code/video_gen/app/video_ops.py) — FFmpeg 操作规划与 SRT 导出。
 
-快速运行（示例）：
+快速运行：
 
 1. 安装依赖：
 
@@ -216,9 +268,14 @@ set OPENAI_API_KEY=your_key_here
 python -m uvicorn app.api:app --reload --port 8000
 ```
 
-4. 在浏览器打开 http://localhost:8000/ 使用聊天 UI，或用 curl / Postman 访问 /api/chat 和 /api/plan。
+4. 启动前端工作台：
 
-说明：当前 UI 使用 CDN 上的 React，因此无需安装 node 即可本地快速预览（适合开发/演示）。如果需要完整的 React/Vite 前端工程，可后续添加。 
+```bash
+npm --prefix frontend install
+npm --prefix frontend run dev
+```
+
+5. 在浏览器打开 http://localhost:5173/ 使用工作台，或用 curl / Postman 访问 /api/chat、/api/plan 和 /api/workbench/state。
 
 ## 9. 变更依赖
 

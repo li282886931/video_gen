@@ -76,7 +76,8 @@ Watermark handling must be represented as user-configured region processing only
 Add or extend these modules:
 
 - `app/models.py`: domain dataclasses or Pydantic models for assets, workbench tasks, edit profiles, lens settings, subtitle cues, voiceover settings, membership plans, orders, users, and provider configuration.
-- `app/task_store.py`: local JSON persistence with CRUD methods for all workbench records. It should create its storage directory automatically and write deterministic JSON.
+- `app/mysql_store.py`: MySQL persistence with CRUD methods for all workbench records. It creates the required tables at backend startup and seeds local default user, membership, and provider configuration.
+- `app/task_store.py`: local JSON fallback store for tests and database-unavailable development runs.
 - `app/video_ops.py`: FFmpeg operation planning. It should build commands for crop, scale, speed, mirror, mute, transcode, extract frames, subtitle burn-in, and concat. Command construction should be testable without requiring FFmpeg execution for most tests.
 - `app/providers.py`: provider interfaces and mock adapters for video generation, image generation, voiceover, subtitle recognition, payment, and quality enhancement.
 - `app/api.py`: add workbench API endpoints while preserving existing chat and plan endpoints.
@@ -167,7 +168,8 @@ Long-running production queues are out of scope. The first implementation can ru
 Backend:
 
 - Model serialization and validation tests.
-- `TaskStore` CRUD and deterministic persistence tests.
+- `MySQLTaskStore` CRUD and table persistence tests.
+- JSON fallback store CRUD and deterministic persistence tests.
 - `video_ops.py` command construction tests for each supported FFmpeg operation.
 - API tests for state loading, asset creation, task creation, SRT export, order creation, admin summary, and provider config updates.
 

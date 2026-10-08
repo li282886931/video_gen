@@ -48,6 +48,11 @@ class Settings:
     default_shots: int = 4
     timeout_seconds: int = 180
     ffmpeg_bin: str = "ffmpeg"
+    mysql_host: str = "127.0.0.1"
+    mysql_port: int = 3306
+    mysql_user: str = "root"
+    mysql_password: str = ""
+    mysql_database: str = "video_gen_workbench"
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -71,6 +76,11 @@ class Settings:
             default_shots=int(os.getenv("VIDEO_DEFAULT_SHOTS", "4")),
             timeout_seconds=int(os.getenv("VIDEO_TIMEOUT_SECONDS", "180")),
             ffmpeg_bin=resolve_ffmpeg_bin(),
+            mysql_host=os.getenv("MYSQL_HOST", "127.0.0.1").strip() or "127.0.0.1",
+            mysql_port=int(os.getenv("MYSQL_PORT", "3306")),
+            mysql_user=os.getenv("MYSQL_USER", "root").strip() or "root",
+            mysql_password=os.getenv("MYSQL_PASSWORD", "").strip(),
+            mysql_database=os.getenv("MYSQL_DATABASE", "video_gen_workbench").strip() or "video_gen_workbench",
         )
 
 
